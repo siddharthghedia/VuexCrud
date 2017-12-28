@@ -1,11 +1,24 @@
 <template>
   <div id="app">
-    <router-view/>
+    <navbar></navbar>
+    <app-main></app-main>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+    import Navbar from '@/components/layout/Navbar'
+    import AppMain from '@/components/layout/AppMain'
+    export default {
+      name: 'app',
+      components: {
+        Navbar,
+        AppMain
+      }
+    }
 </script>
+
+<style lang="css">
+  html {
+    background-color: whitesmoke;
+  }
+</style>
