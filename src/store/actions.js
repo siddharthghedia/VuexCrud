@@ -1,13 +1,14 @@
 import axios from 'axios'
+const url = 'http://vuexbackend.artixun.com/api/articles'
 
 export const getArticles = ({ commit }) => {
-  return axios.get('http://vuexcrudapi.test/api/articles').then((response) => {
+  return axios.get(url).then((response) => {
     commit('setArticles', response.data)
   })
 }
 
 export const addArticle = ({ commit }, article) => {
-  return axios.post('http://vuexcrudapi.test/api/articles', {
+  return axios.post(url, {
     name: article.name,
     description: article.description
   }).then((response) => {
@@ -20,13 +21,13 @@ export const addArticle = ({ commit }, article) => {
 }
 
 export const editArticle = ({ commit }, articleId) => {
-  return axios.get(`http://vuexcrudapi.test/api/articles/${articleId}/edit`).then((response) => {
+  return axios.get(url + `/${articleId}/edit`).then((response) => {
     commit('editArticle', response.data)
   })
 }
 
 export const updateArticle = ({ commit }, article) => {
-  return axios.patch('http://vuexcrudapi.test/api/articles/' + article.id, {
+  return axios.patch(url + '/' + article.id, {
     name: article.name,
     description: article.description
   }).then((response) => {
@@ -40,7 +41,7 @@ export const updateArticle = ({ commit }, article) => {
 
 export const deleteArticle = ({ commit }, articleId) => {
   commit('deleteArticle', articleId)
-  return axios.delete(`http://vuexcrudapi.test/api/articles/${articleId}`)
+  return axios.delete(url + `/${articleId}`)
 }
 
 export const clearValidationErrors = ({ commit }) => {
