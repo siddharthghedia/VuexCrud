@@ -6,19 +6,24 @@ export const setShowModal = (state, value) => {
   state.showModal = value
 }
 
+export const setShowEditModal = (state, value) => {
+  state.showEditModal = value
+}
+
 export const addArticle = (state, article) => {
   state.articles.push(article)
+  state.showModal = false
 }
 
 export const editArticle = (state, article) => {
-  state.showModal = true
+  state.showEditModal = true
   state.article = article
 }
 
 export const updateArticle = (state, article) => {
   let idx = state.articles.map(a => a.id).indexOf(article.id)
   state.articles.splice(idx, 1, article)
-  state.showModal = false
+  state.showEditModal = false
 }
 
 export const deleteArticle = (state, articleId) => {

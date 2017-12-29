@@ -1,11 +1,11 @@
 <template>
     <transition name="modal">
-        <div class="modal changes">
+        <div class="modal changes" style="display: flex">
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <p class="modal-card-title">Create Article</p>
-                    <button class="delete" aria-label="close" @click.prevent="setShowModal(false)"></button>
+                    <p class="modal-card-title">Update Article</p>
+                    <button class="delete" aria-label="close" @click.prevent="setShowEditModal(false)"></button>
                 </header>
                 <section class="modal-card-body">
                     <div class="field">
@@ -24,8 +24,8 @@
                     </div>
                 </section>
                 <footer class="modal-card-foot">
-                    <button class="button is-primary" @click.prevent="add()">Save</button>
-                    <button class="button" @click.prevent="setShowModal(false)">Cancel</button>
+                    <button class="button is-primary" @click.prevent="update">Save</button>
+                    <button class="button" @click.prevent="setShowEditModal(false)">Cancel</button>
                 </footer>
             </div>
         </div>
@@ -51,32 +51,29 @@
       })
     }
     export default {
-      data: function () {
-        return {
-          article: []
-        }
-      },
       computed: {
         ...mapGetters({
+          article: 'article',
           showModal: 'showModal',
           validation: 'getValidationErrors'
         })
       },
       methods: {
         ...mapActions({
-          addArticle: 'addArticle'
+          updateArticle: 'updateArticle'
         }),
-        add () {
-          this.addArticle(this.article)
-              .then((response) => {
-                openNotification({
-                  message: response.data.message,
-                  type: 'success'
-                })
+        update () {
+          this.updateArticle(this.article)
+            .then((response) => {
+              console.log(response.data.message)
+              openNotification({
+                message: response.data.message,
+                type: 'success'
               })
+            })
         },
         ...mapMutations({
-          setShowModal: 'setShowModal'
+          setShowEditModal: 'setShowEditModal'
         })
       }
 

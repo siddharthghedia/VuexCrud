@@ -1,10 +1,12 @@
 <template>
-    <div class="content has-text-centered">
+    <div class="content">
         <div class="tile is-ancestor">
             <div class="tile is-parent">
                 <article class="tile is-child box">
-                    <h4 class="title">Articles</h4>
-                    <a class="button is-primary is-8 modal-button" @click="openModalCard()">Create Item</a>
+                    <h4 class="has-text-centered">
+                        Articles
+                        <a class="button is-primary" style="float: right" @click.prevent="setShowModal(true)">Create Article</a>
+                    </h4>
                     <div class="table-responsive">
                         <table class="table is-bordered is-striped is-narrow">
                             <thead>
@@ -27,10 +29,10 @@
                                     {{ article.description }}
                                 </td>
                                 <td class="is-icon">
-                                    <a @click="openModalCard()">
+                                    <a @click="editArticle(article.id)">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a>
+                                    <a @click="deleteArticle(article.id)">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -41,50 +43,39 @@
                 </article>
             </div>
         </div>
-        <modal :visible="showModal"></modal>
+        <modal v-if="showModal"></modal>
+        <edit-modal v-if="showEditModal"></edit-modal>
     </div>
 </template>
 
 <script>
-    import Vue from 'vue'
     import Modal from './Modal'
-    import { mapActions, mapGetters } from 'vuex'
-    const CardModalComponent = Vue.extend(Modal)
-    const openCardModal = (propsData = {
-      visible: true
-    }) => {
-      return new CardModalComponent({
-        el: document.createElement('div'),
-        propsData
-      })
-    }
+    import EditModal from './EditModal'
+    import { mapActions, mapGetters, mapMutations } from 'vuex'
     export default {
       components: {
-        Modal
-      },
-      data () {
-        return {
-          showModal: false,
-          cardModal: null
-        }
+        Modal,
+        EditModal
       },
       computed: {
         ...mapGetters({
-          articles: 'articles'
+          articles: 'articles',
+          showModal: 'showModal',
+          showEditModal: 'showEditModal'
         })
       },
       mounted: function () {
         this.getArticles()
       },
       methods: {
-        openModalCard () {
-          const cardModal = this.cardModal || (this.cardModal = openCardModal({
-            title: 'Create Article'
-          }))
-          cardModal.$children[0].active()
-        },
         ...mapActions({
-          getArticles: 'getArticles'
+          getArticles: 'getArticles',
+          editArticle: 'editArticle',
+          deleteArticle: 'deleteArticle'
+        }),
+        ...mapMutations({
+          setShowModal: 'setShowModal',
+          setShowEditModal: 'setShowEditModal'
         })
       }
     }
