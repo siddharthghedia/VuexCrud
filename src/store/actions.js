@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://vuexcrudapi.test/api/articles'
+const url = 'http://vuexbackend.artixun.com/api/articles'
 
 export const getArticles = ({ commit }) => {
   return axios.get(url).then((response) => {
