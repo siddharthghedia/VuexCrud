@@ -7,26 +7,28 @@
                     <p class="modal-card-title">Create Article</p>
                     <button class="delete" aria-label="close" @click.prevent="setShowModal(false)"></button>
                 </header>
-                <section class="modal-card-body">
-                    <div class="field">
-                        <label class="label" for="name">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Enter Name" id="name" v-model="article.name">
+                <form method="post" @submit.prevent="add()">
+                    <section class="modal-card-body">
+                        <div class="field">
+                            <label class="label" for="name">Name</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Enter Name" id="name" v-model="article.name">
+                            </div>
+                            <p class="help is-danger" v-if="validation.name">{{ validation.name[0] }}</p>
                         </div>
-                        <p class="help is-danger" v-if="validation.name">{{ validation.name[0] }}</p>
-                    </div>
-                    <div class="field">
-                        <label class="label" for="description">Description</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Enter Description" id="description" v-model="article.description">
+                        <div class="field">
+                            <label class="label" for="description">Description</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Enter Description" id="description" v-model="article.description">
+                            </div>
+                            <p class="help is-danger" v-if="validation.description">{{ validation.description[0] }}</p>
                         </div>
-                        <p class="help is-danger" v-if="validation.description">{{ validation.description[0] }}</p>
-                    </div>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-primary" @click.prevent="add()">Save</button>
-                    <button class="button" @click.prevent="setShowModal(false)">Cancel</button>
-                </footer>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-primary" type="submit">Save</button>
+                        <button class="button" @click.prevent="setShowModal(false)">Cancel</button>
+                    </footer>
+                </form>
             </div>
         </div>
     </transition>

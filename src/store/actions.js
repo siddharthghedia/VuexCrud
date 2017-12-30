@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://vuexbackend.artixun.com/api/articles'
+const url = 'http://vuexcrudapi.test/api/articles'
 
 export const getArticles = ({ commit }) => {
   return axios.get(url).then((response) => {
@@ -12,7 +12,7 @@ export const addArticle = ({ commit }, article) => {
     name: article.name,
     description: article.description
   }).then((response) => {
-    commit('addArticle', article)
+    commit('addArticle', response.data.data)
     return Promise.resolve(response)
   }).catch((error) => {
     commit('setValidationErrors', error.response.data.errors)

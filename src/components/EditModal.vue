@@ -7,26 +7,28 @@
                     <p class="modal-card-title">Update Article</p>
                     <button class="delete" aria-label="close" @click.prevent="setShowEditModal(false)"></button>
                 </header>
-                <section class="modal-card-body">
-                    <div class="field">
-                        <label class="label" for="name">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Enter Name" id="name" v-model="article.name">
+                <form @submit.prevent="update">
+                    <section class="modal-card-body">
+                        <div class="field">
+                            <label class="label" for="name">Name</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Enter Name" id="name" v-model="article.name">
+                            </div>
+                            <p class="help is-danger" v-if="validation.name">{{ validation.name[0] }}</p>
                         </div>
-                        <p class="help is-danger" v-if="validation.name">{{ validation.name[0] }}</p>
-                    </div>
-                    <div class="field">
-                        <label class="label" for="description">Description</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Enter Description" id="description" v-model="article.description">
+                        <div class="field">
+                            <label class="label" for="description">Description</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Enter Description" id="description" v-model="article.description">
+                            </div>
+                            <p class="help is-danger" v-if="validation.description">{{ validation.description[0] }}</p>
                         </div>
-                        <p class="help is-danger" v-if="validation.description">{{ validation.description[0] }}</p>
-                    </div>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-primary" @click.prevent="update">Save</button>
-                    <button class="button" @click.prevent="setShowEditModal(false)">Cancel</button>
-                </footer>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-primary" type="submit">Save</button>
+                        <button class="button" @click.prevent="setShowEditModal(false)">Cancel</button>
+                    </footer>
+                </form>
             </div>
         </div>
     </transition>
@@ -65,7 +67,6 @@
         update () {
           this.updateArticle(this.article)
             .then((response) => {
-              console.log(response.data.message)
               openNotification({
                 message: response.data.message,
                 type: 'success'
