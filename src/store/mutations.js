@@ -4,10 +4,12 @@ export const setArticles = (state, articles) => {
 
 export const setShowModal = (state, value) => {
   state.showModal = value
+  state.validation = []
 }
 
 export const setShowEditModal = (state, value) => {
   state.showEditModal = value
+  state.validation = []
 }
 
 export const addArticle = (state, article) => {
